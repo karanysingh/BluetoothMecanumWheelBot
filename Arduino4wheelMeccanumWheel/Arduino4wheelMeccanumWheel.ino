@@ -1,134 +1,55 @@
-#include<softwareSerial.h>
-const int rx_pin;
-const int tx_pin;
+#include<SoftwareSerial.h>
+const int rx_pin=10;
+const int tx_pin=11;
 
 SoftwareSerial blue_mod(rx_pin,tx_pin);
-
-int d_front_l=11;
-int d_front_r=12;
-int p_front_l=11;
-int p_front_r=12;
-
-int d_back_l=11;
-int d_back_r=12;
-int p_back_l=11;
-int p_back_r=12;
+int dirFr0=1;
+int dirFr1=1;
+int dirBr0=1;
+int dirBr1=1;
+int spdFr=1;
+int spdBr=1;
+int dirFl0=1;
+int dirFl1=1;
+int dirBl0=1;
+int dirBl1=1;
+int spdFl=1;
+int spdBl=1;
 
 char state;
 char mode;
 
-void setup() {
-pinMode(trigPin_0, OUTPUT); 
-pinMode(echoPin_0, INPUT); 
-pinMode(trigPin_90, OUTPUT);
-pinMode(echoPin_90, INPUT);
-pinMode(motor1_IN1,OUTPUT);
-pinMode(motor1_IN2,OUTPUT);
-pinMode(motor2_IN3,OUTPUT);
-pinMode(motor2_IN4,OUTPUT);
 
-extern char state; // global variable
-state = '-';//No movement initially
-Serial.begin(9600); 
+void setup() {
+Serial.begin(9600);
+blue_mod.begin(9600);
+pinMode(dirFr0,OUTPUT);
+pinMode(dirFr1,OUTPUT);
+pinMode(dirFl0,OUTPUT);
+pinMode(dirFl1,OUTPUT);
+pinMode(dirBr0,OUTPUT);
+pinMode(dirBr1,OUTPUT);
+pinMode(spdFr,OUTPUT);
+pinMode(spdFl,OUTPUT);
+pinMode(spdBl,OUTPUT);
+pinMode(spdBr,OUTPUT);
+state = '-';
 }
-//The code inside loop keeps on looping forever.
+
 void loop(){
   // Reads the data from the serial port (i.e from bluetooth in our case)
   // It receives one of the characters from W A S D L R.
-  if(Serial.available())
+  if(blue_mod.available())
   {
-   state = Serial.read();
+   state = blue_mod.read();
    execution(state); 
   }
   else
   {
-    execution("-");
+    execution('P');
   }
   // execution(state) function takes in received character as argument.
    
-}
-
-//Method responsible for controlling motors
-//
-
-
-void forward()
-{
-  //all wheels forward
-  digitalWrite(d_front_l,HIGH);
-  digitalWrite(p_front_l,HIGH);
-  digitalWrite(d_front_r,HIGH);
-  digitalWrite(p_front_r,HIGH);
-  digitalWrite(d_back_l,HIGH);
-  digitalWrite(p_back_l,HIGH);
-  digitalWrite(d_back_r,HIGH);
-  digitalWrite(p_back_r,HIGH);
-}
-
-void backward()
-{
-  digitalWrite(d_front_l,LOW);
-  digitalWrite(p_front_l,HIGH);
-  digitalWrite(d_front_r,LOW);
-  digitalWrite(p_front_r,HIGH);
-  digitalWrite(d_back_l,LOW);
-  digitalWrite(p_back_l,HIGH);
-  digitalWrite(d_back_r,LOW);
-  digitalWrite(p_back_r,HIGH);
-}
-
-void left()
-{
-  digitalWrite(d_front_l,HIGH);
-  digitalWrite(p_front_l,HIGH);
-  digitalWrite(d_front_r,HIGH;
-  digitalWrite(p_front_r,HIGH);
-  digitalWrite(d_back_l,LOW);
-  digitalWrite(p_back_l,HIGH);
-  digitalWrite(d_back_r,LOW);
-  digitalWrite(p_back_r,HIGH);
-}
-void right()
-{
-  digitalWrite(d_front_l,LOW);
-  digitalWrite(p_front_l,HIGH);
-  digitalWrite(d_front_r,LOW);
-  digitalWrite(p_front_r,HIGH);
-  digitalWrite(d_back_l,HIGH);
-  digitalWrite(p_back_l,HIGH);
-  digitalWrite(d_back_r,HIGH);
-  digitalWrite(p_back_r,HIGH);
-}
-void clockwise()
-{
-  digitalWrite(d_front_l,HIGH);
-  digitalWrite(p_front_l,HIGH);
-  digitalWrite(d_front_r,LOW);
-  digitalWrite(p_front_r,HIGH);
-  digitalWrite(d_back_l,HIGH);
-  digitalWrite(p_back_l,HIGH);
-  digitalWrite(d_back_r,LOW);
-  digitalWrite(p_back_r,HIGH);
-}
-void anti_clockwise()
-{
-  digitalWrite(d_front_l,LOW);
-  digitalWrite(p_front_l,HIGH);
-  digitalWrite(d_front_r,HIGH);
-  digitalWrite(p_front_r,HIGH);
-  digitalWrite(d_back_l,LOW);
-  digitalWrite(p_back_l,HIGH);
-  digitalWrite(d_back_r,HIGH);
-  digitalWrite(p_back_r,HIGH);
-}
-
-void s_stop()
-{
-  digitalWrite(p_front_l,LOW);
-  digitalWrite(p_front_r,LOW);
-  digitalWrite(p_back_l,LOW);
-  digitalWrite(p_back_r,LOW);
-  
 }
 void execution(char state){
   switch(state)
@@ -148,7 +69,7 @@ void execution(char state){
   right();
   break;
 }
-    case 'S': {
+case 'S': {
   Serial.println("Backward");
   backward();
   break;
@@ -163,9 +84,113 @@ void execution(char state){
   anti_clockwise();
   break;
 }
-  case "-":
+  case 'P' :
   {
     s_stop();
+    break;
   }
+ }
+}
+
+
+void forward()
+{
+   digitalWrite(dirFr0,HIGH);
+  digitalWrite(dirFr1,LOW);
+  digitalWrite(spdFr,HIGH);
+  digitalWrite(dirFl0,HIGH);
+  digitalWrite(dirFl1,LOW);
+  digitalWrite(spdFl,HIGH);
+  digitalWrite(dirBr0,HIGH);
+  digitalWrite(dirBr1,LOW);
+  digitalWrite(spdBr,HIGH);
+  digitalWrite(dirBl0,HIGH);
+  digitalWrite(dirBl1,LOW);
+  digitalWrite(spdBl,HIGH);
+}
+
+void backward()
+{
+ digitalWrite(dirFr0,LOW);
+  digitalWrite(dirFr1,HIGH);
+  digitalWrite(spdFr,HIGH);
+  digitalWrite(dirFl0,LOW);
+  digitalWrite(dirFl1,HIGH);
+  digitalWrite(spdFl,HIGH);
+  digitalWrite(dirBr0,LOW);
+  digitalWrite(dirBr1,HIGH);
+  digitalWrite(spdBr,HIGH);
+  digitalWrite(dirBl0,LOW);
+  digitalWrite(dirBl1,HIGH);
+  digitalWrite(spdBl,HIGH);
+}
+void left()
+{
+ digitalWrite(dirFr0,LOW);
+  digitalWrite(dirFr1,HIGH);
+  digitalWrite(spdFr,HIGH);
+  digitalWrite(dirFl0,HIGH);
+  digitalWrite(dirFl1,LOW);
+  digitalWrite(spdFl,HIGH);
+  digitalWrite(dirBr0,HIGH);
+  digitalWrite(dirBr1,LOW);
+  digitalWrite(spdBr,HIGH);
+  digitalWrite(dirBl0,LOW);
+  digitalWrite(dirBl1,HIGH);
+  digitalWrite(spdBl,HIGH);
+ }
+
+ void right()
+{
+ digitalWrite(dirFr0,HIGH);
+  digitalWrite(dirFr1,LOW);
+  digitalWrite(spdFr,HIGH);
+  digitalWrite(dirFl0,LOW);
+  digitalWrite(dirFl1,HIGH);
+  digitalWrite(spdFl,HIGH);
+  digitalWrite(dirBr0,LOW);
+  digitalWrite(dirBr1,HIGH);
+  digitalWrite(spdBr,HIGH);
+  digitalWrite(dirBl0,HIGH);
+  digitalWrite(dirBl1,LOW);
+  digitalWrite(spdBl,HIGH);
+}
+void clockwise()
+{
+ digitalWrite(dirFr0,LOW);
+  digitalWrite(dirFr1,HIGH);
+  digitalWrite(spdFr,HIGH);
+  digitalWrite(dirFl0,HIGH);
+  digitalWrite(dirFl1,LOW);
+  digitalWrite(spdFl,HIGH);
+  digitalWrite(dirBr0,LOW);
+  digitalWrite(dirBr1,HIGH);
+  digitalWrite(spdBr,HIGH);
+  digitalWrite(dirBl0,LOW);
+  digitalWrite(dirBl1,HIGH);
+  digitalWrite(spdBl,HIGH);
   }
+
+ void anti_clockwise()
+{
+ digitalWrite(dirFr0,HIGH);
+  digitalWrite(dirFr1,LOW);
+  digitalWrite(spdFr,HIGH);
+  digitalWrite(dirFl0,LOW);
+  digitalWrite(dirFl1,HIGH);
+  digitalWrite(spdFl,HIGH);
+  digitalWrite(dirBr0,HIGH);
+  digitalWrite(dirBr1,LOW);
+  digitalWrite(spdBr,HIGH);
+  digitalWrite(dirBl0,HIGH);
+  digitalWrite(dirBl1,LOW);
+  digitalWrite(spdBl,HIGH);
+}
+void s_stop()
+{
+// change all speed to 0
+  digitalWrite(spdFr  , LOW);
+  digitalWrite(spdFl  , LOW);
+  digitalWrite(spdBr  , LOW);
+  digitalWrite(spdBl  , LOW);  
 }
