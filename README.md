@@ -10,7 +10,6 @@
 * Arduino C
 * HC-06 Bluetooth Module
 * Ardunio UNO
-* Ultrasonic Sensors
 
 ## Arduino UNO
 ![Alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Arduino_Uno_-_R3.jpg/220px-Arduino_Uno_-_R3.jpg "Arduino UNO")
