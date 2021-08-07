@@ -7,6 +7,7 @@
 ## TECH STACK (BOTH SOFTWARE AND HARDWARE)
 * Native Android Development using Kotlin
 * Arduino IDE
+* Arduino C
 * HC-06 Bluetooth Module
 * Ardunio UNO
 * Ultrasonic Sensors
