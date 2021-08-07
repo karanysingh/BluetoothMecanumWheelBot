@@ -4,7 +4,7 @@
 * Apart from the main 4 directional buttons, the two buttons just below rotates the bot clockwise and anticlockwise.
 * The code for the arduino is in the `Arduino4wheelMeccanumWheel` Folder.
 
-## TECH STACK (BOTH SOFTWARE AND HARDWARE)
+## Tech Stack (both software-hardware)
 * Native Android Development using Kotlin
 * Arduino IDE
 * Arduino C
