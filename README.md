@@ -1,4 +1,7 @@
 # Bluetooth Controlled Bot
+A mecanum wheel bot that can be controlled by an android app. The communication between the app and the bot is done using bluetooth.
+* Bot is made using `arduino UNO`, the android app is made in `Kotlin`.
+
 ## Instructions
 * The bluetooth device should be already known to the device. Only then, it will come in the `SELECT DEVICE` list.
 * Apart from the main 4 directional buttons, the two buttons just below rotates the bot clockwise and anticlockwise.
